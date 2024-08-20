@@ -25,30 +25,32 @@ const HomeScreen = () => {
 
 
     // render each movie in the list
-    const renderMovieItem = ({item}: {item:Movie}) => (
-        <View style={styles.movieItem}>
-            <Image
-                source={{uri: `https://image.tmdb.org/t/p/w200${item.poster_path}`}}
-                style={styles.poster}
-            />
-            <View style={styles.info}>
-                <Text style={styles.title} numberOfLines={2} ellipsizeMode='tail'>{item.title}</Text>
-                <Text style={styles.releaseDate}>{item.release_date}</Text>
+    const renderMovieItem = ({ item }: { item: Movie }) => (
+        <TouchableOpacity onPress={() => navigation.navigate('Detail', { movie: item })}>
+            <View style={styles.movieItem}>
+                <Image
+                    source={{ uri: `https://image.tmdb.org/t/p/w200${item.poster_path}` }}
+                    style={styles.poster}
+                />
+                <View style={styles.info}>
+                    <Text style={styles.title} numberOfLines={2} ellipsizeMode='tail'>{item.title}</Text>
+                    <Text style={styles.releaseDate}>{item.release_date}</Text>
+                </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 
-    
+
     const renderFooter = () => {
-        return <View style= {styles.footer}/>;
+        return <View style={styles.footer} />;
     };
 
     return (
         <FlatList
             data={movies}
             renderItem={renderMovieItem}
-            keyExtractor={(item) => item.id.toString() } // Unique key for each item "Identifiable in swift?"
-            ListHeaderComponent={<Header title='Popular Movies' onPress={() => navigation.navigate('Search')}/>}
+            keyExtractor={(item) => item.id.toString()} // Unique key for each item "Identifiable in swift?"
+            ListHeaderComponent={<Header title='Popular Movies' onPress={() => navigation.navigate('Search')} />}
             ListFooterComponent={renderFooter}
         />
     );
@@ -60,7 +62,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
     movieItem: {
         flexDirection: 'row', // Arrange the image and text side by side
-        padding: 10, 
+        padding: 10,
     },
 
     poster: {
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
     },
 
     footer: {
-       height: 32 
+        height: 32
     },
 
     icon: {

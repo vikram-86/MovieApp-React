@@ -1,13 +1,15 @@
-import { View, Text, StyleSheet, TextInput, FlatList } from 'react-native'
+import { View, Text, StyleSheet, TextInput, FlatList, TouchableOpacity } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { Movie } from '../viewModels/MovieViewModel';
 import { SearchViewModel } from '../viewModels/SearchViewModel';
+import { useNavigation } from '@react-navigation/native';
 
 const SearchScreen = () => {
     const [query, setQuery] = useState("");
     const [movies, setMovies] = useState<Movie[]>([]);
     const searchViewModel = new SearchViewModel();
     const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null); // ref to store the timeout ID
+    const navigation = useNavigation()
 
 
     // Handle text input changes and perform the search with debouncing
@@ -31,9 +33,11 @@ const SearchScreen = () => {
     };
 
     const renderMovieItem = ({ item }: { item: Movie }) => (
-        <View style={styles.movieItem}>
-            <Text style={styles.title}>{item.title}</Text>
-        </View>
+        <TouchableOpacity onPress={() => navigation.navigate('Detail', { movie: item })}>
+            <View style={styles.movieItem}>
+                <Text style={styles.title}>{item.title}</Text>
+            </View>
+        </TouchableOpacity>
     );
 
     return (
