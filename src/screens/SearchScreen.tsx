@@ -12,6 +12,7 @@ const SearchScreen = () => {
 
     // Handle text input changes and perform the search with debouncing
     const handleSearch = (text: string) => {
+        console.log('handling search')
         setQuery(text);
         if (typingTimeoutRef.current) {
             clearTimeout(typingTimeoutRef.current); // Clear the previous timeout if it's still running
@@ -19,19 +20,21 @@ const SearchScreen = () => {
 
         typingTimeoutRef.current = setTimeout(async () => {
             if (text.length > 2) {
+                console.log('Preparing search')
                 await searchViewModel.searchMovies(text);
                 setMovies(searchViewModel.movies);
+                console.log('adding movies, result count:', movies)
             } else {
                 setMovies([]);
             }
         }, 500); // wait for 500 ms before making the API call
     };
 
-    const renderMovieItem = ({item}: {item: Movie}) => {
+    const renderMovieItem = ({ item }: { item: Movie }) => (
         <View style={styles.movieItem}>
             <Text style={styles.title}>{item.title}</Text>
         </View>
-    };
+    );
 
     return (
         <View style={styles.container}>
@@ -45,6 +48,7 @@ const SearchScreen = () => {
                 data={movies}
                 renderItem={renderMovieItem}
                 keyExtractor={(item) => item.id.toString()}
+                ListEmptyComponent={<Text> No results Found</Text>}
             />
         </View>
     );

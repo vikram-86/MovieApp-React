@@ -7,6 +7,7 @@ export class SearchViewModel {
     // perform search for a movie with a query
     async searchMovies(query: string): Promise<void> {
         if (query.length > 2) {
+            console.log('searching')
             const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&include_adult=false&language=en-US&page=1`;
             const options = {
                 method: 'GET',
