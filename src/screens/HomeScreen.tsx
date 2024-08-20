@@ -30,11 +30,15 @@ const HomeScreen = () => {
                 style={styles.poster}
             />
             <View style={styles.info}>
-                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.title} numberOfLines={2} ellipsizeMode='tail'>{item.title}</Text>
                 <Text style={styles.releaseDate}>{item.release_date}</Text>
             </View>
         </View>
     );
+
+    const renderFooter = () => {
+        return <View style= {styles.footer}/>;
+    };
 
     return (
         <FlatList
@@ -42,6 +46,7 @@ const HomeScreen = () => {
             renderItem={renderMovieItem}
             keyExtractor={(item) => item.id.toString() } // Unique key for each item "Identifiable in swift?"
             ListHeaderComponent={<Header title='Popular Movies'/>}
+            ListFooterComponent={renderFooter}
         />
     );
 };
@@ -63,17 +68,24 @@ const styles = StyleSheet.create({
     info: {
         marginLeft: 10, // Add some space between poster and the text
         justifyContent: 'center', // Center the text vertically
+        flex: 1, // Ensure the text container takes up remaining space
     },
 
     title: {
         fontSize: 18,
         fontWeight: 'bold',
+        flexShrink: 1, // allows to shrink if needed
+        lineHeight: 27
     },
 
     releaseDate: {
         fontSize: 16,
         color: "gray",
     },
+
+    footer: {
+       height: 32 
+    }
 });
 
 
