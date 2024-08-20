@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 
-const Header = () => {
+const Header = ({title}: {title: string}) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Popular Movies</Text>
+            <Text style={styles.title}>{title}</Text>
         </View>
     )
 }
@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#282c34',
         alignItems: 'center', // Center the text horizontally
         paddingTop: 100,
+        marginBottom: 20
     },
 
     title: {
