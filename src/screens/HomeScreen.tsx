@@ -1,13 +1,15 @@
-import { View, Text, Image, FlatList } from 'react-native'
+import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { MovieViewModel, Movie } from '../viewModels/MovieViewModel'
 import { StyleSheet } from 'react-native';
 import Header from '../components/Header';
+import { useNavigation } from '@react-navigation/native';
+
 // HomeScreen is our main screen and it fetches list of popular movies
 const HomeScreen = () => {
     // State that hold the list of movies
     const [movies, setMovies] = useState<Movie[]>([]);
-
+    const navigation = useNavigation();
     const viewModel = new MovieViewModel();
 
     //useEffect is similar to onAppear in SwiftUI
@@ -36,6 +38,7 @@ const HomeScreen = () => {
         </View>
     );
 
+    
     const renderFooter = () => {
         return <View style= {styles.footer}/>;
     };
@@ -45,7 +48,7 @@ const HomeScreen = () => {
             data={movies}
             renderItem={renderMovieItem}
             keyExtractor={(item) => item.id.toString() } // Unique key for each item "Identifiable in swift?"
-            ListHeaderComponent={<Header title='Popular Movies'/>}
+            ListHeaderComponent={<Header title='Popular Movies' onPress={() => navigation.navigate('Search')}/>}
             ListFooterComponent={renderFooter}
         />
     );
@@ -63,6 +66,7 @@ const styles = StyleSheet.create({
     poster: {
         width: 100,
         height: 150,
+        borderRadius: 8,
     },
 
     info: {
@@ -85,6 +89,10 @@ const styles = StyleSheet.create({
 
     footer: {
        height: 32 
+    },
+
+    icon: {
+        marginRight: 15
     }
 });
 
