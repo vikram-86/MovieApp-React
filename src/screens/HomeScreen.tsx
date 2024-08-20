@@ -2,7 +2,7 @@ import { View, Text, Image, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { MovieViewModel, Movie } from '../viewModels/MovieViewModel'
 import { StyleSheet } from 'react-native';
-
+import Header from '../components/Header';
 // HomeScreen is our main screen and it fetches list of popular movies
 const HomeScreen = () => {
     // State that hold the list of movies
@@ -41,6 +41,7 @@ const HomeScreen = () => {
             data={movies}
             renderItem={renderMovieItem}
             keyExtractor={(item) => item.id.toString() } // Unique key for each item "Identifiable in swift?"
+            ListHeaderComponent={<Header title='Popular Movies'/>}
         />
     );
 };
