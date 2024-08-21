@@ -2,25 +2,30 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react
 import React, { useEffect, useState } from 'react'
 import { Movie } from '../viewModels/MovieViewModel'
 import { FavoritesViewModel } from '../viewModels/FavoritesViewModel';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
 const FavoriteScreen = () => {
     const [favorites, setFavorites] = useState<Movie[]>([]);
     const favoritesViewModel = new FavoritesViewModel();
     const navigation = useNavigation();
+    const isFocused = useIsFocused()
+
+    const fetchFavorites = async () => {
+        const favoriteMovies = await favoritesViewModel.getFavoritesMovies()
+        setFavorites(favoriteMovies);
+    };
 
     useEffect(() => {
-        const fetchFavorites = async () => {
-            const favoriteMovies = await favoritesViewModel.getFavoritesMovies()
-            setFavorites(favoriteMovies);
-        };
+        if(isFocused) {
+            console.log('Favorite screen is focused');
+            fetchFavorites();
+        }
 
-        fetchFavorites();
-    },[]);
+    },[isFocused]);
 
 
     const renderFavoriteItem = ({item}: {item: Movie}) => (
-        <TouchableOpacity onPress={ navigation.navigate('Detail', {movie: item})} >
+        <TouchableOpacity onPress={() => navigation.navigate('Detail', { movie: item })} >
             <View style = {styles.container}>
                 <Image
                     source={ {uri: `https://image.tmdb.org/t/p/w200${item.poster_path}` }} 
