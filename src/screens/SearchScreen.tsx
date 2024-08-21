@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react'
 import { Movie } from '../viewModels/MovieViewModel';
 import { SearchViewModel } from '../viewModels/SearchViewModel';
 import { useNavigation } from '@react-navigation/native';
+import StaticHeader from '../components/StaticHeader';
 
 const SearchScreen = () => {
     const [query, setQuery] = useState("");
@@ -42,18 +43,21 @@ const SearchScreen = () => {
 
     return (
         <View style={styles.container}>
-            <TextInput
-                style={styles.searchInput}
-                placeholder='Search for movies'
-                value={query}
-                onChangeText={handleSearch}
-            />
-            <FlatList
-                data={movies}
-                renderItem={renderMovieItem}
-                keyExtractor={(item) => item.id.toString()}
-                ListEmptyComponent={<Text> No results Found</Text>}
-            />
+            <StaticHeader title='Search' />
+            <View style={styles.innerContainer}>
+                <TextInput
+                    style={styles.searchInput}
+                    placeholder='Search for movies'
+                    value={query}
+                    onChangeText={handleSearch}
+                />
+                <FlatList
+                    data={movies}
+                    renderItem={renderMovieItem}
+                    keyExtractor={(item) => item.id.toString()}
+                    ListEmptyComponent={<Text> No results Found</Text>}
+                />
+            </View>
         </View>
     );
 }
@@ -61,17 +65,20 @@ const SearchScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 10,
-        paddingTop: 64,
+    },
+
+    innerContainer: {
+        padding: 10
     },
 
     searchInput: {
         height: 40,
         borderColor: '#ccc',
         borderWidth: 1,
-        paddingHorizontal: 10,
+        paddingHorizontal: 32,
         borderRadius: 5,
-        marginBottom: 10,
+        marginBottom: 24,
+        marginTop: 24
     },
 
     movieItem: {

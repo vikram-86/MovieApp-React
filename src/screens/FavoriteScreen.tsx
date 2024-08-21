@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Movie } from '../viewModels/MovieViewModel'
 import { FavoritesViewModel } from '../viewModels/FavoritesViewModel';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
+import StaticHeader from '../components/StaticHeader';
 
 const FavoriteScreen = () => {
     const [favorites, setFavorites] = useState<Movie[]>([]);
@@ -26,7 +27,7 @@ const FavoriteScreen = () => {
 
     const renderFavoriteItem = ({item}: {item: Movie}) => (
         <TouchableOpacity onPress={() => navigation.navigate('Detail', { movie: item })} >
-            <View style = {styles.container}>
+            <View style = {styles.movieItem}>
                 <Image
                     source={ {uri: `https://image.tmdb.org/t/p/w200${item.poster_path}` }} 
                     style={styles.poster}
@@ -40,29 +41,28 @@ const FavoriteScreen = () => {
     );
 
   return (
-    <View style={styles.container}>
-        <Text style={styles.heading}>Your Favorite Movies</Text>
+    <View style={styles.screenContainer}>
+        <StaticHeader title='Your favorite movies' />
+        <View style={styles.listContainer} >
         <FlatList
             data={favorites}
             renderItem={renderFavoriteItem}
             keyExtractor={(item) => item.id.toString()}
             ListEmptyComponent={<Text style={styles.emptyText}>No favorites added yet</Text>}
         />
+        </View>
     </View>
   )
 }
 const styles = StyleSheet.create({
-    container: {
+    screenContainer: {
         flex: 1,
-        padding: 10,
         backgroundColor: '#f0f0f0',
     },
 
-    heading: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        textAlign: 'center'
+    listContainer: {
+        flex:1,
+        padding: 10
     },
 
     movieItem: {
