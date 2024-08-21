@@ -4,6 +4,7 @@ import { MovieViewModel, Movie } from '../viewModels/MovieViewModel'
 import { StyleSheet } from 'react-native';
 import Header from '../components/Header';
 import { useNavigation } from '@react-navigation/native';
+import StaticHeader from '../components/StaticHeader';
 
 // HomeScreen is our main screen and it fetches list of popular movies
 const HomeScreen = () => {
@@ -47,7 +48,7 @@ const HomeScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Header title='Popular Movies' onPress={() => navigation.navigate('Search')} />
+            <StaticHeader title='Popular Movies' />
             <FlatList
                 data={movies}
                 renderItem={renderMovieItem}

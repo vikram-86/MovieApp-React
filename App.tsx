@@ -24,6 +24,8 @@ function MainTabs() {
             iconName = "home";
           } else if (route.name === "Favorites") {
             iconName = "heart";
+          } else if (route.name === "Search") {
+            iconName = "search1"
           }
 
           return <AntDesign name={iconName} size={size} color={color} />;
@@ -35,6 +37,7 @@ function MainTabs() {
     >
       <Tab.Screen name="Home" component={HomeScreen} options={{headerShown:false}}/>
       <Tab.Screen name="Favorites" component={FavoriteScreen} options={{headerShown: false}} />
+      <Tab.Screen name="Search" component={SearchScreen} options={{headerShown: false}} />
     </Tab.Navigator>
   );
 }

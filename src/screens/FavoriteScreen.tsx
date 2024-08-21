@@ -42,7 +42,7 @@ const FavoriteScreen = () => {
 
   return (
     <View style={styles.screenContainer}>
-        <StaticHeader title='Your favorite movies' />
+        <StaticHeader title='Favorites' />
         <View style={styles.listContainer} >
         <FlatList
             data={favorites}
