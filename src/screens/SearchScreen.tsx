@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TextInput, FlatList, TouchableOpacity, Image } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { Movie } from '../viewModels/MovieViewModel';
 import { SearchViewModel } from '../viewModels/SearchViewModel';
@@ -36,7 +36,14 @@ const SearchScreen = () => {
     const renderMovieItem = ({ item }: { item: Movie }) => (
         <TouchableOpacity onPress={() => navigation.navigate('Detail', { movie: item })}>
             <View style={styles.movieItem}>
-                <Text style={styles.title}>{item.title}</Text>
+                <Image
+                    source={{ uri: `https://image.tmdb.org/t/p/w200${item.poster_path}` }}
+                    style={styles.poster}
+                />
+                <View style={styles.info}>
+                    <Text style={styles.title}>{item.title}</Text>
+                    <Text style={styles.releaseDate}>{item.release_date}</Text>
+                </View>
             </View>
         </TouchableOpacity>
     );
@@ -55,7 +62,7 @@ const SearchScreen = () => {
                     data={movies}
                     renderItem={renderMovieItem}
                     keyExtractor={(item) => item.id.toString()}
-                    ListEmptyComponent={<Text> No results Found</Text>}
+                    ListEmptyComponent={<Text style={styles.emptyText}>No results found</Text>}
                 />
             </View>
         </View>
@@ -75,21 +82,59 @@ const styles = StyleSheet.create({
         height: 40,
         borderColor: '#ccc',
         borderWidth: 1,
-        paddingHorizontal: 32,
-        borderRadius: 5,
+        paddingHorizontal: 16,
+        borderRadius: 8,
         marginBottom: 24,
-        marginTop: 24
+        backgroundColor: '#fff',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 3,
     },
 
     movieItem: {
+        flexDirection: 'row',
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        marginBottom: 16,
+        overflow: 'hidden',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 3,
+    },
+
+    poster: {
+        width: 100,
+        height: 150,
+        borderRadius: 10,
+    },
+
+    info: {
+        flex: 1,
         padding: 10,
-        borderBottomColor: '#ccc',
-        borderBottomWidth: 1
+        justifyContent: 'center',
     },
 
     title: {
         fontSize: 18,
-    }
+        fontWeight: 'bold',
+        marginBottom: 5,
+    },
+
+    releaseDate: {
+        fontSize: 14,
+        color: 'gray',
+    },
+
+    emptyText: {
+        textAlign: 'center',
+        marginTop: 50,
+        fontSize: 18,
+        color: 'gray',
+    },
 });
 
 export default SearchScreen

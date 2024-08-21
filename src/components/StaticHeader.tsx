@@ -12,13 +12,14 @@ const StaticHeader = ({title}: {title:string}) => {
 }
 const styles = StyleSheet.create({
     container: {
-        width: '100%', // Ensure the header takes the full width of the screen
+        width: '100%', 
         flexDirection: 'row',
-        justifyContent: 'center', // Center the title horizontally
-        alignItems: 'center', // Center items vertically
+        justifyContent: 'flex-start', 
+        alignItems: 'center', 
         backgroundColor: '#282c34',
         paddingTop: 64,
-        paddingBottom: 20, // Adding some padding at the bottom for spacing
+        paddingBottom: 20,
+        paddingLeft: 18
     },
 
     title: {
